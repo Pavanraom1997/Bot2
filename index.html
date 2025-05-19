@@ -3,185 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VLC ERP Chatbot</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-
-    #chatbot-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #ff6600;
-      border: none;
-      border-radius: 50%;
-      width: 80px;
-      height: 80px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      cursor: pointer;
-      z-index: 1000;
-      background-image: url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png'); /* Businessman icon */
-      background-size: 50px 50px;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-
-    #chat-panel {
-      position: fixed;
-      bottom: 110px;
-      right: 20px;
-      width: 350px;
-      max-height: 500px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      display: none;
-      flex-direction: column;
-      overflow: hidden;
-      z-index: 999;
-      animation: slideUp 0.3s ease-out;
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .chat-header {
-      background-color: orange;
-      color: white;
-      padding: 10px;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .chat-header img {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-    }
-
-    .chat-messages {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-      font-size: 14px;
-    }
-
-    .chat-input {
-      display: flex;
-      border-top: 1px solid #ddd;
-    }
-
-    .chat-input input {
-      flex: 1;
-      border: none;
-      padding: 10px;
-    }
-
-    .chat-input button {
-      background-color: #ff6600;
-      border: none;
-      color: white;
-      padding: 10px 15px;
-      cursor: pointer;
-    }
-
-    .message {
-      margin: 5px 0;
-    }
-
-    .predefined {
-      background-color: #f0f0f0;
-      border-radius: 5px;
-      padding: 5px 10px;
-      margin: 5px;
-      display: inline-block;
-      cursor: pointer;
-    }
-
-    .predefined:hover {
-      background-color: #ddd;
-    }
-  </style>
+  <title>VLC ERP AI Chatbot</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="chatbot-button" id="chatbot-button">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="bot" />
+  </div>
 
-  <!-- Chatbot Button -->
-  <button id="chatbot-button" title="Chat with us"></button>
-
-  <!-- Chat Panel -->
-  <div id="chat-panel">
+  <div class="chat-panel" id="chat-panel">
     <div class="chat-header">
-      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Agent">
-      Hi, I'm Ved, your VLC ERP support agent
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Ved Avatar" />
+      <span>Hi, I am Ved, your VLC ERP support agent. How can I help you?</span>
     </div>
-    <div class="chat-messages" id="chat-messages">
-      <!-- Messages will go here -->
+    <div class="chat-body" id="chat-body">
+      <div class="message ai-message">Hi, how can I help you today?</div>
     </div>
-    <div style="padding: 10px;">
-      <div class="predefined">How do I reset my password?</div>
-      <div class="predefined">What is the refund policy?</div>
-      <div class="predefined">How to check enrolment?</div>
-    </div>
-    <div class="chat-input">
+    <div class="chat-footer">
       <input type="text" id="user-input" placeholder="Type your question..." />
-      <button onclick="sendMessage()">Send</button>
+      <button id="send-btn">Send</button>
     </div>
   </div>
 
-  <script>
-    const chatbotButton = document.getElementById("chatbot-button");
-    const chatPanel = document.getElementById("chat-panel");
-    const chatMessages = document.getElementById("chat-messages");
-
-    function appendMessage(message, sender = 'user') {
-      const msgDiv = document.createElement("div");
-      msgDiv.className = "message";
-      msgDiv.textContent = `${sender === 'bot' ? 'Ved: ' : 'You: '}${message}`;
-      chatMessages.appendChild(msgDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    function sendMessage() {
-      const input = document.getElementById("user-input");
-      const message = input.value.trim();
-      if (!message) return;
-      appendMessage(message);
-      input.value = "";
-
-      fetch("http://localhost:5000/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ query: message })
-      })
-      .then(res => res.json())
-      .then(data => appendMessage(data.answer, 'bot'))
-      .catch(() => appendMessage("Oops, something went wrong.", 'bot'));
-    }
-
-    chatbotButton.addEventListener("click", () => {
-      chatPanel.style.display = chatPanel.style.display === "flex" ? "none" : "flex";
-    });
-
-    document.querySelectorAll(".predefined").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.getElementById("user-input").value = btn.textContent;
-        sendMessage();
-      });
-    });
-
-    // Show welcome after delay
-    setTimeout(() => {
-      chatPanel.style.display = "flex";
-      appendMessage("Hi, how can I help you today?", "bot");
-    }, 5000);
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
+

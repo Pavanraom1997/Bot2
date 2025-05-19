@@ -130,3 +130,38 @@ body {
 .chat-footer button:hover {
   background-color: #fb8c00;
 }
+
+
+
+.admin-container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 2rem;
+  border: 2px solid #e67e22;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  background-color: #fffefb;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.admin-container input[type="file"] {
+  margin: 10px 0;
+  padding: 0.5rem;
+}
+
+.admin-container button {
+  background-color: #e67e22;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#uploadStatus {
+  margin-top: 15px;
+  font-weight: bold;
+  color: green;
+}
